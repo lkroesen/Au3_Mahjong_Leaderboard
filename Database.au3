@@ -18,6 +18,10 @@ Func Database()
 EndFunc
 
 Func ReadDatabase()
+   if FileExists("db/readme.txt") Then
+	  FileDelete("db/readme.txt")
+   EndIf
+
    $dbFiles = _FileListToArray("db/")
 
    If @error = 1 Then
