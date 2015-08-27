@@ -129,4 +129,5 @@ Func Import()
    for $i = 0 to 12 step 1
 	  $iDora[$i] = IniRead ( $file, "Dora Data", "Dora " & $i+1, -1)
    Next
+   Show_Import()
 EndFunc

@@ -36,10 +36,26 @@ Func ClearHand()
    GUICtrlSetData($inputTotalValue, "Total Value")
    GUICtrlSetData($inputHandName, "Hand Name")
 
+   for $i = 0 to 5 Step 1
+	  GUICtrlSetImage($DoraTopRow[$i], "Img\Default\empty.bmp")
+	  GUICtrlSetImage($DoraBotRow[$i], "Img\Default\empty.bmp")
+   Next
+
+EndFunc
+
+Func ClearTiles()
+   for $i = 0 to 16 Step 1
+	  GUICtrlSetImage($TileMidRow[$i], $SkinFolder & "null.bmp")
+	  GUICtrlSetImage($TileBotRow[$i], $SkinFolder & "null.bmp")
+	  if $i <= 12 Then
+		 GUICtrlSetImage($TileTopRow[$i], $SkinFolder90 & "null.bmp")
+	  EndIf
+   Next
 EndFunc
 
 ; While called show import it'll work for any hand, just treat it as an import I guess \0/
 Func Show_Import()
+   ClearTiles()
    $nOpen = 0
    $nOpenHad = 0
    $LastTileUsedMid = 0
@@ -199,6 +215,13 @@ Func Show_Import()
 	  GUICtrlSetData($inputTotalValue, $iTotalValues)
 	  GUICtrlSetData($inputHandName, $iHandName)
 	#EndRegion
+
+   #Region Dora Tile Placement
+	  For $i = 0 to 11 Step 2
+		 GuiCtrlSetImage($DoraTopRow[$i/2], $SkinFolder & TileNumToFileName($iDora[$i]) & ".bmp" )
+		 GuiCtrlSetImage($DoraBotRow[$i/2], $SkinFolder & TileNumToFileName($iDora[$i+1]) & ".bmp" )
+	  Next
+   #EndRegion
 EndFunc
 
 Func TileNumToFileName($cT)

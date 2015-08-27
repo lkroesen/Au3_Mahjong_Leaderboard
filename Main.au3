@@ -42,12 +42,12 @@ Next
 
 ; Dora Top
 For $i = 0 to 5
-   $DoraTopRow[$i] = GUICtrlCreatePic("Img\Default\null.bmp", 56+($i*43), 296, 43, 55)
+   $DoraTopRow[$i] = GUICtrlCreatePic("Img\Default\empty.bmp", 56+($i*43), 296, 43, 55)
 Next
 
 ;Dora Bottom
 For $i = 0 to 5
-   $DoraBotRow[$i] = GUICtrlCreatePic("Img\Default\null.bmp", 56+($i*43), 350, 43, 55)
+   $DoraBotRow[$i] = GUICtrlCreatePic("Img\Default\empty.bmp", 56+($i*43), 350, 43, 55)
 Next
 
 
@@ -56,7 +56,8 @@ $inputFu = GUICtrlCreateInput("Fu / (N/A)", 208, 256, 121, 21, BitOR($GUI_SS_DEF
 $inputPlayerName = GUICtrlCreateInput("Player Name", 352, 256, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
 $inputDNoneDealer = GUICtrlCreateInput("Non Dealer / Dealer", 496, 256, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
 $inputTotalValue = GUICtrlCreateInput("Total Value", 640, 256, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$bImportToDB = GUICtrlCreateButton("Import to DB", 375, 295, 75, 25)
+$bImportToDB = GUICtrlCreateButton("Import to DB", 375, 310, 75, 25)
+$bDeleteFromDB = GUICtrlCreateButton("DEL from DB", 375, 365, 75, 25)
 $HandList = GUICtrlCreateList("", 496, 288, 280, 136)
 #EndRegion
 
@@ -111,7 +112,7 @@ $Pic4 = GUICtrlCreatePic("Img\etc\Default\PeiNS.bmp", 32, 216, 44, 44)
 $Pic5 = GUICtrlCreatePic("Img\etc\Default\NanNS.bmp", 600, 216, 44, 44)
 $DieFace[0] = GUICtrlCreatePic("Img\etc\Default\d1.bmp", 288, 184, 44, 44)
 $DieFace[1] = GUICtrlCreatePic("Img\etc\Default\d1.bmp", 344, 184, 44, 44)
-$bDiceRoll = GUICtrlCreateButton("Roll Dice", 296, 240, 75, 25)
+$bDiceRoll = GUICtrlCreateButton("Roll Dice", 300, 240, 75, 25)
 $Pic8 = GUICtrlCreatePic("Img\etc\Default\Ton.bmp", 416, 184, 84, 84)
 $iValue = GUICtrlCreateInput("Yakuman", 624, 352, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
 $bRon = GUICtrlCreateButton("Ron", 640, 376, 35, 25)
@@ -133,7 +134,9 @@ $bSelectedDealer = GUICtrlCreateButton("Make Dealer", 56, 360, 75, 25)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
+; Inital Discoveries
 Database()
+FindSkinsTiles()
 
 While 1
 	$nMsg = GUIGetMsg()
@@ -144,6 +147,10 @@ While 1
 			RollDieTable()
 		 Case $bImportToDB
 			MoveToDB()
+		 Case $bDeleteFromDB
+			FileDelete("db/" & GUICtrlRead($HandList))
+			_GUICtrlListBox_DeleteString($HandList, _GUICtrlListBox_GetCaretIndex($HandList))
+			ClearHand()
 		 Case $HandList
 			ImportFromDB("db/" & GUICtrlRead($HandList))
 			Show_Import()
