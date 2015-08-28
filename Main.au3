@@ -10,6 +10,7 @@
 #include <Importer.au3>
 #include <Database.au3>
 #include <Settings.au3>
+#include <Table.au3>
 
 Global $TileTopRow[23]
 Global $TileMidRow[17]
@@ -94,41 +95,69 @@ $Button6 = GUICtrlCreateButton("Search", 700, 140, 75, 25)
 #EndRegion
 
 Global $DieFace[2]
+Global $dealerpic[4]
+Global $bRiichiP[4]
+Global $PlayerIcon[4]
+Global $iPointsP[4]
+Global $iPlayerName[4]
+Global $imgRiichi[4]
 
 #Region Table
 $TabSheet4 = GUICtrlCreateTabItem("Table")
-;$BackgroundTable = GUICtrlCreatePic("Img\etc\Default\Board.bmp", 0, 0, 817, 445)
-$iPlayerName1 = GUICtrlCreateInput("iPlayerName1", 376, 344, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$Input8 = GUICtrlCreateInput("iPlayerName2", 656, 216, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$iPlayerName4 = GUICtrlCreateInput("iPlayerName4", 96, 216, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$Input10 = GUICtrlCreateInput("iPlayerName3", 384, 56, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$iP3Points = GUICtrlCreateInput("100,000", 384, 80, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$iP4Points = GUICtrlCreateInput("100,000", 96, 240, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$iP2Points = GUICtrlCreateInput("100,000", 656, 240, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$iP1Points = GUICtrlCreateInput("100,000", 376, 368, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$Pic2 = GUICtrlCreatePic("Img\etc\Default\TonNS.bmp", 320, 344, 44, 44)
-$Pic3 = GUICtrlCreatePic("Img\etc\Default\ShaaNS.bmp", 320, 56, 44, 44)
-$Pic4 = GUICtrlCreatePic("Img\etc\Default\PeiNS.bmp", 32, 216, 44, 44)
-$Pic5 = GUICtrlCreatePic("Img\etc\Default\NanNS.bmp", 600, 216, 44, 44)
-$DieFace[0] = GUICtrlCreatePic("Img\etc\Default\d1.bmp", 288, 184, 44, 44)
-$DieFace[1] = GUICtrlCreatePic("Img\etc\Default\d1.bmp", 344, 184, 44, 44)
-$bDiceRoll = GUICtrlCreateButton("Roll Dice", 300, 240, 75, 25)
-$Pic8 = GUICtrlCreatePic("Img\etc\Default\Ton.bmp", 416, 184, 84, 84)
-$iValue = GUICtrlCreateInput("Yakuman", 624, 352, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$bRon = GUICtrlCreateButton("Ron", 640, 376, 35, 25)
-$bTusmo = GUICtrlCreateButton("Tsumo", 688, 376, 43, 25)
-$iHandNumber = GUICtrlCreateInput("iHandNumber", 32, 56, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$Input16 = GUICtrlCreateInput("iBonus", 32, 96, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
-$bRiichiP1 = GUICtrlCreateButton("Riichi", 360, 304, 75, 25)
-$bRiichiP2 = GUICtrlCreateButton("Riichi", 640, 176, 75, 25)
+GUICtrlSetState(-1, $GUI_SHOW)
+
+$iPlayerName[0] = GUICtrlCreateInput("iPlayerName1", 376, 344, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+$iPlayerName[1] = GUICtrlCreateInput("iPlayerName2", 656, 200, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+$iPlayerName[2] = GUICtrlCreateInput("iPlayerName3", 376, 56, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+$iPlayerName[3] = GUICtrlCreateInput("iPlayerName4", 86, 200, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+
+$imgRiichi[0] = GUICtrlCreatePic("Img\etc\Default\RiichiStick.bmp", 316, 310, 174, 14)
+GUICtrlCreateLabel("x0", 496, 311)
+
+$iPointsP[0] = GUICtrlCreateInput("100000", 376, 368, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+$iPointsP[1] = GUICtrlCreateInput("100000", 656, 224, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+$iPointsP[2] = GUICtrlCreateInput("100000", 376, 80, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+$iPointsP[3] = GUICtrlCreateInput("100000", 86, 224, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+
+$PlayerIcon[0] = GUICtrlCreatePic("Img\etc\Default\TonNS.bmp", 320, 344, 44, 44)
+$PlayerIcon[1] = GUICtrlCreatePic("Img\etc\Default\NanNS.bmp", 600, 200, 44, 44)
+$PlayerIcon[2] = GUICtrlCreatePic("Img\etc\Default\ShaaNS.bmp", 320, 56, 44, 44)
+$PlayerIcon[3] = GUICtrlCreatePic("Img\etc\Default\PeiNS.bmp", 32, 200, 44, 44)
+
+$dealerpic[0] = GUICtrlCreatePic("Img\etc\Default\dealer.bmp", 320, 390, 44, 22)
+$dealerpic[1] = GUICtrlCreatePic("Img\etc\Default\dealer.bmp", 320, 106, 44, 22)
+$dealerpic[2] = GUICtrlCreatePic("Img\etc\Default\dealer.bmp", 32, 250, 44, 22)
+$dealerpic[3] = GUICtrlCreatePic("Img\etc\Default\dealer.bmp", 600, 250, 44, 22)
+
+$bRiichiP[0] = GUICtrlCreateButton("Riichi", 396, 396, 75, 25)
+$bRiichiP[1] = GUICtrlCreateButton("Riichi", 678, 254, 75, 25)
+$bRiichiP[2] = GUICtrlCreateButton("Riichi", 396, 108, 75, 25)
+$bRiichiP[3] = GUICtrlCreateButton("Riichi", 108, 254, 75, 25)
+
+$DieFace[0] = GUICtrlCreatePic("Img\etc\Default\d1.bmp", 288, 200, 44, 44)
+$DieFace[1] = GUICtrlCreatePic("Img\etc\Default\d1.bmp", 344, 200, 44, 44)
+$bDiceRoll = GUICtrlCreateButton("Roll Dice", 300, 254, 75, 25)
+
+$PicRoundWind = GUICtrlCreatePic("Img\etc\Default\Ton.bmp", 416, 200, 84, 84)
+$bWindChangerMainPlus = GUICtrlCreateButton("+", 512, 208, 27, 25)
+$bWindChangerMainMinus = GUICtrlCreateButton("-", 512, 248, 27, 25)
+
+$bTie = GUICtrlCreateButton("Tie", 666, 376, 27, 25)
+$iValue = GUICtrlCreateInput("", 624, 352, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+$bRon = GUICtrlCreateButton("Ron", 624, 376, 35, 25)
+$bTusmo = GUICtrlCreateButton("Tsumo", 702, 376, 43, 25)
+
+Global $nHandNum = 1
+Global $nBonusNum = 0
+$iHandNumber = GUICtrlCreateInput($tRoundWind & " " & $nHandNum, 32, 56, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+$iBonusNum = GUICtrlCreateInput("Renchan: " & $nBonusNum, 32, 96, 121, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_CENTER))
+
 $bNextHand = GUICtrlCreateButton("Next Hand", 680, 56, 75, 25)
 $bRenchan = GUICtrlCreateButton("Renchan", 680, 96, 75, 25)
-$bWindChangerMainPlus = GUICtrlCreateButton("+", 512, 192, 27, 25)
-$bWindChangerMainMinus = GUICtrlCreateButton("-", 512, 232, 27, 25)
-$bRiichiP3 = GUICtrlCreateButton("Riichi", 360, 120, 75, 25)
-$bRiichiP4 = GUICtrlCreateButton("Riichi", 72, 176, 75, 25)
+
+
 $bDeselectAll = GUICtrlCreateButton("Deselect All", 56, 320, 75, 25)
-$bSelectedDealer = GUICtrlCreateButton("Make Dealer", 56, 360, 75, 25)
+$bSelectedDealer = GUICtrlCreateButton("Dealer", 56, 360, 75, 25)
 #EndRegion
 
 GUISetState(@SW_SHOW)
@@ -140,6 +169,9 @@ FindSkinsTiles()
 
 While 1
 	$nMsg = GUIGetMsg()
+
+	Selector($nMsg)
+
 	Switch $nMsg
 		Case $GUI_EVENT_CLOSE
 			Exit
@@ -154,5 +186,9 @@ While 1
 		 Case $HandList
 			ImportFromDB("db/" & GUICtrlRead($HandList))
 			Show_Import()
+		 Case $bWindChangerMainPlus
+			RoundWindChanger(true)
+		 Case $bWindChangerMainMinus
+			RoundWindChanger(false)
 	EndSwitch
 WEnd

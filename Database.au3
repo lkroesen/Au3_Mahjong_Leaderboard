@@ -29,7 +29,7 @@ Func ReadDatabase()
 	  return false
    EndIf
 
-   _ArrayDisplay($dbFiles, "$dbFiles")
+   ;_ArrayDisplay($dbFiles, "$dbFiles")
    return true
 EndFunc
 

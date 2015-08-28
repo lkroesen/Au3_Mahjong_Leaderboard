@@ -1,6 +1,8 @@
 Global $SkinFolder = "Img\"
 Global $SkinFolder90 = "Img\"
 Global $Skins
+; Todo modability of etc folder
+Global $etcFolder = "Img\etc\Default\"
 
 Func Settings()
    $SkinFolder = "Img\" & GUICtrlRead($Default) & "\"

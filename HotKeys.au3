@@ -9,16 +9,6 @@ Global $LastTileUsedTop = 0
 Global $LastTileUsedMid = 0
 Global $LastTileUsedBot = 0
 
-Func RollDieTable()
-   local $die[2]
-   $die[0] = random(1,6,1)
-   $die[1] = random(1,6,1)
-
-   for $i = 0 to 1 Step 1
-	  GUICtrlSetImage($DieFace[$i], "Img\etc\Default\d" & $die[$i] & ".bmp")
-   Next
-EndFunc
-
 Func ClearHand()
    for $i = 0 to 16 Step 1
 	  GUICtrlSetImage($TileMidRow[$i], $SkinFolder & "null.bmp")
